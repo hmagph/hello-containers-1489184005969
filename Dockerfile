@@ -15,6 +15,9 @@
 FROM node
 MAINTAINER Philippe Mulet "philippe_mulet@fr.ibm.com"
 
+LABEL name = "helloworld"
+LABEL version = "1.0"
+
 # Install the application
 ADD package.json /app/package.json
 RUN cd /app && npm install  
@@ -34,7 +37,7 @@ RUN grep -q '^password.*required' /etc/pam.d/common-password && sed -i 's/^passw
 
 # Vulnerability Advisor : Temporarily remove a specific <package> that was discovered vulnerable
 # RUN dpkg --purge --force-all <package>
-dpkg --purge --force-all imagemagick
+RUN dpkg --purge --force-all imagemagick
 
 # Define command to run the application when the container starts
 CMD ["node", "/app/app.js"] 
